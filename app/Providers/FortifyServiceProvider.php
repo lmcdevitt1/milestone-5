@@ -62,9 +62,9 @@ class FortifyServiceProvider extends ServiceProvider
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::verifyEmailView(fn (Request $request) => Inertia::render('auth/verify-email', [
-            'status' => $request->session()->get('status'),
-        ]));
+      Fortify::verifyEmailView(function () {
+	return view('pages.auth.verify-email');
+});
 
        Fortify::registerView(function () {
             return view('pages.auth.register');

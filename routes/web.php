@@ -17,21 +17,20 @@ Route::get('/laptops', function (Request $request) {
 
         foreach ($terms as $term) {
             $query->where(function ($q) use ($term) {
-                $q->where('name', 'like', "%{$term}%")
-                  ->orWhere('manufacturer', 'like', "%{$term}%")
-                  ->orWhere('make', 'like', "%{$term}%")
-                  ->orWhere('model', 'like', "%{$term}%");
+                $q->where('brand', 'like', "%{$term}%")
+                  ->orWhere('model', 'like', "%{$term}%")
+                  ->orWhere('serial_number', 'like', "%{$term}%");
             });
         }
     }
 
     $items = $query->get();
 
-    return view('laptop.index', compact('items'));
+    return view('laptops.index', compact('items'));
 })->name('laptops.index');
 
-Route::get('/laptops/{laptops}', function (Laptop $laptops) {
-    return view('laptops.show', compact('laptops'));
+Route::get('/laptops/{laptop}', function (Laptop $laptop) {
+    return view('laptops.show', compact('laptop'));
 })->name('laptops.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -48,8 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('rentals.index');
 
     // The rest of the rental routes still use the controller, since they have validation logic
- 
-   Route::get('/rentals/create', [RentalController::class, 'create'])->name('rentals.create');
+    Route::get('/rentals/create', [RentalController::class, 'create'])->name('rentals.create');
     Route::post('/rentals', [RentalController::class, 'store'])->name('rentals.store');
     Route::get('/rentals/{rental}/edit', [RentalController::class, 'edit'])->name('rentals.edit');
     Route::put('/rentals/{rental}', [RentalController::class, 'update'])->name('rentals.update');
