@@ -20,7 +20,7 @@ If it does, the response I set up is a $this->get('/laptops'); response so to ta
 I set up a *LaptopTest*, which includes the inventory.
 I set up a *RentalTest*, which includes the start date, and the end date of the rentals.
 
-#Inside the tests folder inside the Feature folder:
+# Inside the tests folder inside the Feature folder:
 I set up a *Search.php* file so that way customers can easily search the website.
 I also set up a Dashboard test file so that way i could test the usability of the dashboard.
 #inside the feature folder there is an Auth folder that includes:
