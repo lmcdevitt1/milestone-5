@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Providers;
-use Illuminate\Support\Facades\Blade;
+
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -23,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-	Blade::anonymousComponentPath(resource_path('views/layouts'), 'layouts');
+        Blade::anonymousComponentPath(resource_path('views/layouts'), 'layouts');
     }
 
     /**

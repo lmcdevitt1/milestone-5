@@ -18,8 +18,8 @@ Route::get('/laptops', function (Request $request) {
         foreach ($terms as $term) {
             $query->where(function ($q) use ($term) {
                 $q->where('brand', 'like', "%{$term}%")
-                  ->orWhere('model', 'like', "%{$term}%")
-                  ->orWhere('serial_number', 'like', "%{$term}%");
+                    ->orWhere('model', 'like', "%{$term}%")
+                    ->orWhere('serial_number', 'like', "%{$term}%");
             });
         }
     }

@@ -11,7 +11,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -48,7 +47,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-                    Fortify::loginView(function () {
+        Fortify::loginView(function () {
             return view('pages.auth.login');
         });
 
@@ -62,14 +61,13 @@ class FortifyServiceProvider extends ServiceProvider
             'status' => $request->session()->get('status'),
         ]));
 
-      Fortify::verifyEmailView(function () {
-	return view('pages.auth.verify-email');
-});
+        Fortify::verifyEmailView(function () {
+            return view('pages.auth.verify-email');
+        });
 
-       Fortify::registerView(function () {
+        Fortify::registerView(function () {
             return view('pages.auth.register');
         });
-       
 
         Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/two-factor-challenge'));
 

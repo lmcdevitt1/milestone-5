@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-     Schema::create('laptops', function (Blueprint $table) {
+        Schema::create('laptops', function (Blueprint $table) {
             $table->id();
             $table->string('brand');
             $table->string('model');
@@ -19,7 +19,8 @@ return new class extends Migration
             $table->decimal('daily_rate', 8, 2);
             $table->boolean('is_available')->default(true);
             $table->timestamps();
-        });    }
+        });
+    }
 
     /**
      * Reverse the migrations.

@@ -14,7 +14,7 @@ test('registration screen can be rendered', function () {
 
 test('new users can register', function () {
 
-	$this->withoutExceptionHandling();
+    $this->withoutExceptionHandling();
     $response = $this->post(route('register.store'), [
         'name' => 'Test User',
         'email' => 'test@example.com',
@@ -22,9 +22,9 @@ test('new users can register', function () {
         'password_confirmation' => 'password',
     ]);
 
-//$response->dump();
+    // $response->dump();
 
-$response->assertSessionHasNoErrors();
+    $response->assertSessionHasNoErrors();
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
 });
