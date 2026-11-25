@@ -1,33 +1,38 @@
-<x-layouts::app :title="__('Dashboard')">
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+@extends('layouts.app')
+
+@section('title', 'Dashboard')
+
+@section('content')
+    <div class="flex flex-col gap-4">
+        <div class="grid gap-4 md:grid-cols-3">
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-sm font-medium text-gray-500">Available Laptops</h2>
+                <p class="mt-2 text-2xl font-bold text-gray-800">Browse Catalog</p>
+                <a href="{{ route('laptops.index') }}" class="mt-4 inline-block text-sm text-blue-600 hover:underline">
+                    View laptops &rarr;
+                </a>
             </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-sm font-medium text-gray-500">My Rentals</h2>
+                <p class="mt-2 text-2xl font-bold text-gray-800">Active & Past</p>
+                <a href="{{ route('rentals.index') }}" class="mt-4 inline-block text-sm text-blue-600 hover:underline">
+                    Manage rentals &rarr;
+                </a>
             </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-sm font-medium text-gray-500">Quick Action</h2>
+                <p class="mt-2 text-2xl font-bold text-gray-800">New Rental</p>
+                <a href="{{ route('rentals.create') }}" class="mt-4 inline-block text-sm text-blue-600 hover:underline">
+                    Rent a laptop &rarr;
+                </a>
             </div>
-        </div>
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-            <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-        </div>
-    </div>
-</x-layouts::app>
-<x-layouts::app :title="__('Rentals')">
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="flex items-center justify-between">
-            <h1 class="text-2xl font-bold">Laptop Rentals</h1>
-            <a href="{{ route('rentals.create') }}" class="rounded-lg bg-blue-600 px-4 py-2 text-white">
-                Add Rental
-            </a>
         </div>
 
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 p-6 dark:border-neutral-700">
-            <!-- Put your table or content here -->
-            <p>Your rental list goes here.</p>
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <h2 class="text-lg font-semibold text-gray-800 mb-2">Welcome, {{ auth()->user()->name }}!</h2>
+            <p class="text-sm text-gray-600">Use the links above or the top navigation bar to browse inventory and manage your rentals.</p>
         </div>
     </div>
-</x-layouts::app>
+@endsection

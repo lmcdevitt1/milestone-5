@@ -21,6 +21,6 @@ class Rental extends Model
 
     public function laptop()
     {
-        return $this->belongsTo(Laptop::class);
+        return $this->belongsTo(LaptopInventory::class, 'laptop_id');
     }
 }

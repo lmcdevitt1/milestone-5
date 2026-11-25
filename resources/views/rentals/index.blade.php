@@ -1,104 +1,52 @@
-<x-layouts::app :title="__('My Rentals')">
-    @if (session('success'))
-    <div class="rounded-lg bg-green-100 p-4 text-green-800">
-        {{ session('success') }}
-    </div>
-@endif
+@extends('layouts.app')
 
-    <div class="flex flex-col gap-6">
+@section('title', 'Rentals')
 
-        <div>
-            <h1 class="text-2xl font-bold">
-                My Laptop Rentals
-            </h1>
-            <a href="{{ route('rentals.create') }}"
-   style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 20px; border-radius: 8px; margin: 12px 0; text-decoration: none;">
-    + Create New Rental
-</a>
-
-            <p class="text-gray-500">
-                View and manage your laptop rental history.
-            </p>
+@section('content')
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-gray-800">Laptop Rentals</h1>
+            <a href="{{ route('rentals.create') }}" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+                Add Rental
+            </a>
         </div>
 
-        <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-neutral-700">
-
-            <table class="w-full text-left">
-
-                <thead class="bg-gray-100 dark:bg-neutral-800">
-                    <tr>
-                        <th class="p-4">Laptop</th>
-                        <th class="p-4">Start Date</th>
-                        <th class="p-4">End Date</th>
-                        <th class="p-4">Status</th>
-                        <th class="p-4">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @forelse ($rentals as $rental)
-                        <tr class="border-t border-gray-200 dark:border-neutral-700">
-
-                            <td class="p-4">
-                                {{ $rental->laptop->brand }}
-                                {{ $rental->laptop->model }}
-                            </td>
-
-                            <td class="p-4">
-                                {{ $rental->start_date }}
-                            </td>
-
-                            <td class="p-4">
-                                {{ $rental->end_date }}
-                            </td>
-
-                            <td class="p-4">
-                                {{ ucfirst($rental->status) }}
-                            </td>
-
-<td class="p-4">
-
-    <div class="flex gap-3">
-
-        <a
-            href="{{ route('rentals.edit', $rental) }}"
-            style="color: #2563eb;"
-        >
-            Edit
-        </a>
-
-        <form
-            method="POST"
-            action="{{ route('rentals.destroy', $rental) }}"
-            onsubmit="return confirm('Are you sure you want to delete this rental?')"
-        >
-            @csrf
-            @method('DELETE')
-
-            <button type="submit" style="color: #dc2626;">
-                Delete
-            </button>
-
-        </form>
-
-    </div>
-
-</td>
-
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+            @if ($rentals->isEmpty())
+                <p class="text-sm text-gray-600">You don't have any rentals yet.</p>
+            @else
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200 text-gray-600">
+                            <th class="py-2">Laptop</th>
+                            <th class="py-2">Start Date</th>
+                            <th class="py-2">End Date</th>
+                            <th class="py-2">Status</th>
+                            <th class="py-2 text-right">Actions</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="p-6 text-center text-gray-500">
-                                You don't have any rentals yet.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-
-            </table>
-
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach ($rentals as $rental)
+                            <tr>
+                                <td class="py-3 font-medium text-gray-800">
+                                    {{ $rental->laptop->brand ?? '' }} {{ $rental->laptop->model ?? 'Laptop #' . $rental->laptop_id }}
+                                </td>
+                                <td class="py-3 text-gray-600">{{ $rental->start_date }}</td>
+                                <td class="py-3 text-gray-600">{{ $rental->end_date }}</td>
+                                <td class="py-3 text-gray-600">{{ $rental->status }}</td>
+                                <td class="py-3 text-right space-x-2">
+                                    <a href="{{ route('rentals.edit', $rental) }}" class="text-blue-600 hover:underline">Edit</a>
+                                    <form method="POST" action="{{ route('rentals.destroy', $rental) }}" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
-
     </div>
-
-</x-layouts::app>
+@endsection
