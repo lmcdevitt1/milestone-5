@@ -2,10 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rental extends Model
 {
+    /** @use HasFactory<\Database\Factories\RentalFactory> */
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
         'laptop_id',
@@ -14,13 +24,36 @@ class Rental extends Model
         'status',
     ];
 
-    public function user()
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        return $this->belongsTo(User::class);
+        return [
+            'start_date' => 'date',
+            'end_date' => 'date',
+        ];
     }
 
-    public function laptop()
+    /**
+     * Get the laptop that is being rented.
+     *
+     * @return BelongsTo<Laptop, $this>
+     */
+    public function laptop(): BelongsTo
     {
-        return $this->belongsTo(LaptopInventory::class, 'laptop_id');
+        return $this->belongsTo(Laptop::class);
+    }
+
+    /**
+     * Get the user who owns the rental.
+     *
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
