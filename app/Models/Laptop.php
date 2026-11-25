@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Laptop extends Model
 {
@@ -19,7 +20,10 @@ class Laptop extends Model
         'daily_rate' => 'decimal:2',
     ];
 
-    public function rentals()
+    /**
+     * @return HasMany<Rental, $this>
+     */
+    public function rentals(): HasMany
     {
         return $this->hasMany(Rental::class);
     }

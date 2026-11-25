@@ -4,28 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Laptop;
 use App\Models\Rental;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class RentalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-
         $rentals = Rental::with('laptop')
             ->where('user_id', auth()->id())
             ->get();
 
         return view('rentals.index', compact('rentals'));
-
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $laptops = Laptop::where('is_available', true)->get();
 
@@ -35,16 +35,17 @@ class RentalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'laptop_id' => ['required', 'exists:laptops,id'],
+            'laptop_id' => ['required', 'integer', 'exists:laptops,id'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
         ]);
 
         // Find the selected laptop
-        $laptop = Laptop::findOrFail($validated['laptop_id']);
+        /** @var Laptop $laptop */
+        $laptop = Laptop::findOrFail((int) $validated['laptop_id']);
 
         // Check whether the laptop is available
         if (! $laptop->is_available) {
@@ -85,7 +86,7 @@ class RentalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): void
     {
         //
     }
@@ -93,7 +94,7 @@ class RentalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Rental $rental)
+    public function edit(Rental $rental): View
     {
         if ($rental->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
@@ -105,7 +106,7 @@ class RentalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Rental $rental)
+    public function update(Request $request, Rental $rental): RedirectResponse
     {
         if ($rental->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
@@ -141,7 +142,7 @@ class RentalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Rental $rental)
+    public function destroy(Rental $rental): RedirectResponse
     {
         if ($rental->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
