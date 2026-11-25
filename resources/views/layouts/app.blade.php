@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
 <body class="bg-gray-100 text-gray-900 antialiased">
     <nav class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
